@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.xwt.common.mapper.BTokenMapper" >
+  <resultMap id="BaseResultMap" type="com.pro.xwt.common.model.BToken" >
+    <id column="auth_token" property="authToken" jdbcType="VARCHAR" />
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+    <result column="session_id" property="sessionId" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    auth_token, user_id, expire_time, session_id, ip, device_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.pro.xwt.common.model.BTokenKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from b_token
+    where auth_token = #{authToken,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.pro.xwt.common.model.BTokenKey" >
+    delete from b_token
+    where auth_token = #{authToken,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pro.xwt.common.model.BToken" >
+    insert into b_token (auth_token, user_id, create_time, expire_time, 
+      session_id, ip, device_id
+      )
+    values (#{authToken,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+    	#{expireTime,jdbcType=TIMESTAMP}, #{sessionId,jdbcType=VARCHAR}, 
+    	#{ip,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pro.xwt.common.model.BToken" >
+    insert into b_token
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="authToken != null" >
+        auth_token,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="expireTime != null" >
+        expire_time,
+      </if>
+      <if test="sessionId != null" >
+        session_id,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="authToken != null" >
+        #{authToken,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="expireTime != null" >
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sessionId != null" >
+        #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pro.xwt.common.model.BToken" >
+    update b_token
+    <set >
+      <if test="createTime!=null">
+      	create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="expireTime != null" >
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sessionId != null" >
+        session_id = #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where auth_token = #{authToken,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pro.xwt.common.model.BToken" >
+    update b_token
+    set expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=VARCHAR}
+    where auth_token = #{authToken,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="select" parameterType="com.pro.xwt.common.model.BToken" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from b_token
+  	<trim prefix="WHERE" prefixOverrides="AND|OR">
+  		<if test="authToken != null">
+  			auth_token = #{authToken,jdbcType=VARCHAR} 
+  		</if>
+  		<if test="userId != null">
+  			AND user_id = #{userId,jdbcType=VARCHAR}
+  		</if>
+  		<if test="createTime!=null">
+      		AND create_time = #{createTime,jdbcType=TIMESTAMP}
+      	</if>
+  		<if test="expireTime != null">
+  			AND expire_time &gt;= #{expireTime,jdbcType=TIMESTAMP}
+  		</if>
+  		<if test="sessionId != null">
+  			AND session_id = #{sessionId,jdbcType=VARCHAR}
+  		</if>
+  		<if test="ip != null">
+  			AND ip = #{ip,jdbcType=VARCHAR}
+  		</if>
+  		<if test="deviceId != null">
+  			AND device_id = #{deviceId,jdbcType=VARCHAR}
+  		</if>
+  	</trim>
+  </select>
+</mapper>

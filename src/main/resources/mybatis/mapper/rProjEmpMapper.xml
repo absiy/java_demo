@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.xwt.common.mapper.RProjEmpMapper">
+	<resultMap id="BaseResultMap" type="com.pro.xwt.common.model.RProjEmp">
+		<id column="emp_id" property="empId" jdbcType="VARCHAR" />
+		<id column="proj_id" property="projId" jdbcType="VARCHAR" />
+		<result column="delete_state" property="deleteState" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_emp_id" property="createEmpId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		emp_id, proj_id, delete_state, create_time, create_emp_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="com.pro.xwt.common.model.RProjEmpKey">
+		select
+		<include refid="Base_Column_List" />
+		from r_proj_emp
+		where emp_id = #{empId,jdbcType=VARCHAR}
+		and proj_id =
+		#{projId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="com.pro.xwt.common.model.RProjEmpKey">
+		delete from
+		r_proj_emp
+		where emp_id = #{empId,jdbcType=VARCHAR}
+		and proj_id =
+		#{projId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.pro.xwt.common.model.RProjEmp">
+		insert into r_proj_emp
+		(emp_id, proj_id, delete_state,
+		create_time, create_emp_id)
+		values
+		(#{empId,jdbcType=VARCHAR}, #{projId,jdbcType=VARCHAR},
+		#{deleteState,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{createEmpId,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.pro.xwt.common.model.RProjEmp">
+		insert into r_proj_emp
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="empId != null">
+				emp_id,
+			</if>
+			<if test="projId != null">
+				proj_id,
+			</if>
+			<if test="deleteState != null">
+				delete_state,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="empId != null">
+				#{empId,jdbcType=VARCHAR},
+			</if>
+			<if test="projId != null">
+				#{projId,jdbcType=VARCHAR},
+			</if>
+			<if test="deleteState != null">
+				0,
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createEmpId != null">
+				#{createEmpId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.pro.xwt.common.model.RProjEmp">
+		update r_proj_emp
+		<set>
+			<if test="deleteState != null">
+				delete_state = #{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id = #{createEmpId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where emp_id = #{empId,jdbcType=VARCHAR}
+		and proj_id =
+		#{projId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.pro.xwt.common.model.RProjEmp">
+		update r_proj_emp
+		set delete_state = #{deleteState,jdbcType=VARCHAR},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		create_emp_id =
+		#{createEmpId,jdbcType=VARCHAR}
+		where emp_id =
+		#{empId,jdbcType=VARCHAR}
+		and proj_id = #{projId,jdbcType=VARCHAR}
+	</update>
+
+	<select id="selectEmpCountById" resultType="int">
+		select
+		count(emp_id)
+		from r_proj_emp
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				proj_id=#{id}
+			</if>
+			AND delete_state = "0"
+		</trim>
+	</select>
+</mapper>

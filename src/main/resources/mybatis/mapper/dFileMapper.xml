@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pro.xwt.common.mapper.DFileMapper">
+	<resultMap id="BaseResultMap" type="com.pro.xwt.common.model.DFile">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="size" jdbcType="BIGINT" property="size" />
+		<result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
+		<result column="delete_state" jdbcType="VARCHAR" property="deleteState" />
+		<result column="upload_emp_id" jdbcType="VARCHAR" property="uploadEmpId" />
+		<result column="upload_emp_name" property="uploadEmpName" jdbcType="VARCHAR" />
+		<result column="storage_path" jdbcType="VARCHAR" property="storagePath" />
+		<result column="folder_id" jdbcType="VARCHAR" property="folderId" />
+		<result column="proj_id" jdbcType="VARCHAR" property="projId" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, size, upload_time, delete_state, upload_emp_id, upload_emp_name,storage_path,
+		folder_id,proj_id
+	</sql>
+	<select id="findByProjId" parameterType="string" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from d_file
+		where proj_id=#{id} and delete_state='0' and (folder_id IS NULL OR
+		folder_id='')
+	</select>
+
+	<select id="findSubFileByParentId" parameterType="string"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from d_file
+		where folder_id=#{id} and delete_state='0'
+	</select>
+	<select id="findById" parameterType="string" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from d_file
+		where id=#{id}
+	</select>
+  <select id="findByCondition" parameterType="map" resultMap="BaseResultMap">
+ 	select <include refid="Base_Column_List"/>
+ 	from d_file
+ 	<trim prefix="WHERE" prefixOverrides="AND|OR">
+		<if test="id != null">
+			id = #{id,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null">
+			AND name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="size != null">
+			AND size = #{size, jdbcType=BIGINT}
+		</if>
+		<if test="uploadTime != null">
+			AND upload_time = #{uploadTime, jdbcType=TIMESTAMP}
+		</if>
+		<if test="deleteState != null">
+			AND delete_state = #{deleteState, jdbcType=VARCHAR}
+		</if>
+		<if test="uploadEmpId != null">
+			AND upload_emp_id = #{uploadEmpId, jdbcType=VARCHAR}
+		</if>
+		<if test="uploadEmpName != null">
+			AND upload_emp_name = #{uploadEmpName, jdbcType=VARCHAR}
+		</if>
+		<if test="storagePath != null">
+			AND storage_path = #{storagePath, jdbcType=VARCHAR}
+		</if>
+		<if test="folderId != null">
+			AND folder_id = #{folderId, jdbcType=VARCHAR}
+		</if>
+		<if test="projId != null">
+			AND proj_id = #{projId,jdbcType=VARCHAR}
+		</if>
+		</trim>
+  </select>
+  <insert id="insert" parameterType="com.pro.xwt.common.model.DFile">
+  	insert into d_file 
+  	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null">
+			id ,
+		</if>
+		<if test="name != null">
+			name ,
+		</if>
+		<if test="size != null">
+			size ,
+		</if>
+		<if test="uploadTime != null">
+			upload_time ,
+		</if>
+		<if test="deleteState != null">
+			delete_state ,
+		</if>
+		<if test="uploadEmpId != null">
+			upload_emp_id ,
+		</if>
+		<if test="uploadEmpName != null">
+			upload_emp_name ,
+		</if>
+		<if test="storagePath != null">
+			storage_path ,
+		</if>
+		<if test="folderId != null">
+			folder_id ,
+		</if>
+		<if test="projId != null">
+			proj_id ,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null">
+			#{id,jdbcType=VARCHAR},
+		</if>
+		<if test="name != null">
+			#{name,jdbcType=VARCHAR},
+		</if>
+		<if test="size != null">
+			#{size, jdbcType=BIGINT},
+		</if>
+		<if test="uploadTime != null">
+			#{uploadTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="deleteState != null">
+			#{deleteState, jdbcType=VARCHAR},
+		</if>
+		<if test="uploadEmpId != null">
+			#{uploadEmpId, jdbcType=VARCHAR},
+		</if>
+		<if test="uploadEmpName != null">
+			#{uploadEmpName, jdbcType=VARCHAR},
+		</if>
+		<if test="storagePath != null">
+			#{storagePath, jdbcType=VARCHAR},
+		</if>
+		<if test="folderId != null">
+			#{folderId, jdbcType=VARCHAR},
+		</if>
+		<if test="projId != null">
+			#{projId,jdbcType=VARCHAR}
+		</if>
+	</trim>
+  </insert>
+</mapper>

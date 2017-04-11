@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.xwt.common.mapper.BMessageMapper">
+	<resultMap id="BaseResultMap1" type="com.pro.xwt.common.example.BMessageExample">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="read_state" property="readState" jdbcType="VARCHAR" />
+		<result column="task_id" property="taskId" jdbcType="VARCHAR" />
+		<result column="accp_emp_id" property="accpEmpId" jdbcType="VARCHAR" />
+		<result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="delete_state" property="deleteState" jdbcType="VARCHAR" />
+		<result column="create_emp_id" property="createEmpId" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="last_end_time" property="lastEndTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="BaseResultMap" type="com.pro.xwt.common.model.BMessage">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="read_state" property="readState" jdbcType="VARCHAR" />
+		<result column="task_id" property="taskId" jdbcType="VARCHAR" />
+		<result column="accp_emp_id" property="accpEmpId" jdbcType="VARCHAR" />
+		<result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="delete_state" property="deleteState" jdbcType="VARCHAR" />
+		<result column="create_emp_id" property="createEmpId" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, content, type, read_state, task_id, accp_emp_id,
+		expire_time,
+		create_time, delete_state,
+		create_emp_id
+	</sql>
+	<sql id="foreign_Column_List">
+		m.id, m.content, m.type, m.read_state, m.task_id,
+		m.accp_emp_id, m.expire_time,
+		m.create_time, m.delete_state,
+		m.create_emp_id,name,description
+	</sql>
+
+	<insert id="insert" parameterType="com.pro.xwt.common.model.BMessage">
+		insert into b_message
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="readState != null">
+				read_state,
+			</if>
+			<if test="taskId != null">
+				task_id,
+			</if>
+			<if test="accpEmpId != null">
+				accp_emp_id,
+			</if>
+			<if test="expireTime != null">
+				expire_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="deleteState != null">
+				delete_state,
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="readState != null">
+				#{readState,jdbcType=VARCHAR},
+			</if>
+			<if test="taskId != null">
+				#{taskId,jdbcType=VARCHAR},
+			</if>
+			<if test="accpEmpId != null">
+				#{accpEmpId,jdbcType=VARCHAR},
+			</if>
+			<if test="expireTime != null">
+				#{expireTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteState != null">
+				#{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpId != null">
+				#{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+	<select id="findByCondition" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from b_message
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				AND content = #{content,jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				AND type = #{type, jdbcType=VARCHAR}
+			</if>
+			<if test="readState != null">
+				AND read_state = #{readState, jdbcType=TIMESTAMP}
+			</if>
+			<if test="taskId != null">
+				AND task_id = #{taskId, jdbcType=TIMESTAMP}
+			</if>
+			<if test="tempTypeId != null">
+				AND temp_type_id = #{tempTypeId, jdbcType=VARCHAR}
+			</if>
+			<if test="accpEmpId != null">
+				AND accp_emp_id = #{accpEmpId, jdbcType=TIMESTAMP}
+			</if>
+			<if test="expireTime != null">
+				AND expire_time = #{expireTime, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime,jdbcType=VARCHAR}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState, jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="selectAll" parameterType="map"
+		resultType="com.pro.xwt.common.example.BMessageExample">
+		select
+		<include refid="foreign_Column_List" />
+		from b_message m
+		JOIN b_task t ON m.task_id=t.id
+		WHERE (m.type='DEADLINE' and expire_time &lt;= DATE_ADD(NOW(),INTERVAL 1 hour) and NOW() &lt; expire_time) or m.type != 'DEADLINE'
+			<if test="readState != null">
+				AND read_state = #{readState, jdbcType=TIMESTAMP}
+			</if>
+			<if test="accpEmpId != null">
+				AND accp_emp_id = #{accpEmpId, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND m.delete_state = #{deleteState, jdbcType=VARCHAR}
+			</if>
+		
+	</select>
+</mapper>

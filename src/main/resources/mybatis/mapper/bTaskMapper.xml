@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.xwt.common.mapper.BTaskMapper">
+	<resultMap id="BaseResultMap" type="com.pro.xwt.common.model.BTask">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="proj_id" property="projId" jdbcType="VARCHAR" />
+		<result column="proj_flow_id" property="projFlowId" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="parent_task_id" property="parentTaskId"
+			jdbcType="VARCHAR" />
+		<result column="cycle_time" property="cycleTime" jdbcType="VARCHAR" />
+		<result column="cycle_task_end" property="cycleTaskEnd"
+			jdbcType="INTEGER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="exec_emp_id" property="execEmpId" jdbcType="VARCHAR" />
+		<result column="exec_emp_name" property="execEmpName" jdbcType="VARCHAR" />
+		<result column="com_state" property="comState" jdbcType="VARCHAR" />
+		<result column="com_end_time" property="comEndTime" jdbcType="TIMESTAMP" />
+		<result column="last_end_time" property="lastEndTime" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="delete_state" property="deleteState" jdbcType="VARCHAR" />
+		<result column="create_emp_id" property="createEmpId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, proj_id, proj_flow_id, type, parent_task_id,
+		cycle_time,
+		cycle_task_end,
+		description, exec_emp_id,exec_emp_name,
+		com_state,
+		com_end_time, last_end_time, create_time,
+		delete_state,
+		create_emp_id
+	</sql>
+	<insert id="insert" parameterType="com.pro.xwt.common.model.BTask">
+		insert into b_task
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="projId != null">
+				proj_id,
+			</if>
+			<if test="projFlowId != null">
+				proj_flow_id,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="parentTaskId != null">
+				parent_task_id,
+			</if>
+			<if test="cycleTime != null">
+				cycle_time,
+			</if>
+			<if test="cycleTaskEnd != null">
+				cycle_task_end,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="execEmpId != null">
+				exec_emp_id,exec_emp_name,
+			</if>
+			<if test="comState != null">
+				com_state,
+			</if>
+			<if test="comEndTime != null">
+				com_end_time,
+			</if>
+			<if test="lastEndTime != null">
+				last_end_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="deleteState != null">
+				delete_state,
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id,
+			</if>
+		</trim>
+
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="projId != null">
+				#{projId,jdbcType=VARCHAR},
+			</if>
+			<if test="projFlowId != null">
+				#{projFlowId,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="parentTaskId != null">
+				#{parentTaskId,jdbcType=VARCHAR},
+			</if>
+			<if test="cycleTime != null">
+				#{cycleTime,jdbcType=VARCHAR},
+			</if>
+			<if test="cycleTaskEnd != null">
+				#{cycleTaskEnd,jdbcType=INTEGER},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="execEmpId != null">
+				#{execEmpId,jdbcType=VARCHAR},(select name from
+				b_employee where id = #{execEmpId}),
+			</if>
+			<if test="comState != null">
+				#{comState,jdbcType=VARCHAR},
+			</if>
+			<if test="comEndTime != null">
+				#{comEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastEndTime != null">
+				#{lastEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteState != null">
+				#{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpId != null">
+				#{createEmpId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="deleteById" parameterType="string">
+		update b_task
+		set
+		delete_state = 1
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<update id="update" parameterType="com.pro.xwt.common.model.BTask">
+		update b_task
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="projId != null">
+				proj_id = #{projId,jdbcType=VARCHAR},
+			</if>
+			<if test="projFlowId != null">
+				proj_flow_id = #{projFlowId,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="parentTaskId != null">
+				parent_task_id = #{parentTaskId,jdbcType=VARCHAR},
+			</if>
+			<if test="cycleTime != null">
+				cycle_time = #{cycleTime,jdbcType=VARCHAR},
+			</if>
+			<if test="cycleTaskEnd != null">
+				cycle_task_end = #{cycleTaskEnd,jdbcType=INTEGER},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="execEmpId != null">
+				exec_emp_id = #{execEmpId,jdbcType=VARCHAR},
+			</if>
+			<if test="execEmpName != null">
+				exec_emp_name = #{execEmpName,jdbcType=VARCHAR},
+			</if>
+			<if test="comState != null">
+				com_state = #{comState,jdbcType=VARCHAR},
+			</if>
+			<if test="comEndTime != null">
+				com_end_time = #{comEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastEndTime != null">
+				last_end_time &gt; NOW(),
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteState != null">
+				delete_state = #{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id = #{createEmpId,jdbcType=VARCHAR},
+			</if>
+			<if test="msgState != null">
+				msg_state = #{msgState,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="findByCondition" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from b_task
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name like
+				CONCAT("%",CONCAT(#{name,jdbcType=VARCHAR},"%"))
+			</if>
+			<if test="projId != null">
+				AND proj_id = #{projId, jdbcType=VARCHAR}
+			</if>
+			<if test="projFlowId != null">
+				AND proj_flow_id, = #{projFlowId, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				AND type = #{type, jdbcType=VARCHAR}
+			</if>
+			<if test="parentTaskId != null">
+				AND parent_task_id, = #{parentTaskId, jdbcType=VARCHAR}
+			</if>
+			<if test="cycleTime != null">
+				AND cycle_time, = #{cycleTime, jdbcType=VARCHAR}
+			</if>
+			<if test="description != null">
+				AND description = #{description, jdbcType=VARCHAR}
+			</if>
+			<if test="execEmpId != null">
+				AND exec_emp_id = #{execEmpId,jdbcType=VARCHAR}
+			</if>
+			<if test="execEmpName != null">
+				AND exec_emp_name = #{execEmpName,jdbcType=VARCHAR}
+			</if>
+			<if test="comState != null">
+				AND com_state = #{comState,jdbcType=VARCHAR}
+			</if>
+			<if test="comEndTime != null">
+				AND com_end_time = #{comEndTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="lastEndTime != null">
+				AND last_end_time = #{lastEndTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+		LIMIT 0,1
+	</select>
+
+	<select id="findById" parameterType="string" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from b_task
+		where id=#{id}
+	</select>
+
+	<select id="queryListAll" parameterType="map"
+		resultType="com.pro.xwt.common.model.BTask">
+		select
+		<include refid="Base_Column_List" />
+		from b_task
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="projId != null">
+				AND proj_id = #{projId, jdbcType=VARCHAR}
+			</if>
+			<if test="projFlowId != null">
+				AND proj_flow_id = #{projFlowId, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				AND type = #{type, jdbcType=VARCHAR}
+			</if>
+			<if test="parentTaskId != null">
+				AND parent_task_id = #{parentTaskId, jdbcType=VARCHAR}
+			</if>
+			<if test="cycleTime != null">
+				AND cycle_time = #{cycleTime, jdbcType=VARCHAR}
+			</if>
+			<if test="cycleTaskEnd != null">
+				AND cycle_task_end = #{cycleTaskEnd, jdbcType=INTEGER}
+			</if>
+			<if test="description != null">
+				AND description = #{description, jdbcType=VARCHAR}
+			</if>
+			<if test="execEmpId != null">
+				AND exec_emp_id = #{execEmpId, jdbcType=VARCHAR}
+			</if>
+			<if test="execEmpName != null">
+				AND exec_emp_name = #{execEmpName, jdbcType=VARCHAR}
+			</if>
+			<if test="comState != null">
+				AND com_state = #{comState, jdbcType=VARCHAR}
+			</if>
+			<if test="comEndTime != null">
+				AND com_end_time = #{comEndTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null ">
+				AND delete_state = #{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{execEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		select COUNT(1)
+		from b_task
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="projId != null">
+				AND proj_id = #{projId, jdbcType=VARCHAR}
+			</if>
+			<if test="projFlowId != null">
+				AND proj_flow_id = #{projFlowId, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				AND type = #{type, jdbcType=VARCHAR}
+			</if>
+			<if test="parentTaskId != null">
+				AND parent_task_id = #{parentTaskId, jdbcType=VARCHAR}
+			</if>
+			<if test="cycleTime != null">
+				AND cycle_time = #{cycleTime, jdbcType=VARCHAR}
+			</if>
+			<if test="cycleTaskEnd != null">
+				AND cycle_task_end = #{cycleTaskEnd, jdbcType=INTEGER}
+			</if>
+			<if test="description != null">
+				AND description = #{description, jdbcType=VARCHAR}
+			</if>
+			<if test="execEmpId != null">
+				AND exec_emp_id = #{execEmpId, jdbcType=VARCHAR}
+			</if>
+			<if test="execEmpName != null">
+				AND exec_emp_name = #{execEmpName, jdbcType=VARCHAR}
+			</if>
+			<if test="comState != null">
+				AND com_state = #{comState, jdbcType=VARCHAR}
+			</if>
+			<if test="comEndTime != null">
+				AND com_end_time = #{comEndTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="lastEndTime != null">
+				AND last_end_time &lt;=NOW()
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null ">
+				AND delete_state =
+				#{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{execEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="queryListByPojo" parameterType="com.pro.xwt.common.model.BTask"
+		resultType="com.pro.xwt.common.model.BTask">
+		select
+		<include refid="Base_Column_List" />
+		from b_task
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="projId != null">
+				AND proj_id = #{projId, jdbcType=VARCHAR}
+			</if>
+			<if test="projFlowId != null">
+				AND proj_flow_id = #{projFlowId, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				AND type = #{type, jdbcType=VARCHAR}
+			</if>
+			<if test="parentTaskId != null">
+				AND parent_task_id = #{parentTaskId, jdbcType=VARCHAR}
+			</if>
+			<if test="cycleTime != null">
+				AND cycle_time = #{cycleTime, jdbcType=VARCHAR}
+			</if>
+			<if test="cycleTaskEnd != null">
+				AND cycle_task_end = #{cycleTaskEnd, jdbcType=INTEGER}
+			</if>
+			<if test="description != null">
+				AND description = #{description, jdbcType=VARCHAR}
+			</if>
+			<if test="execEmpId != null">
+				AND exec_emp_id = #{execEmpId, jdbcType=VARCHAR}
+			</if>
+			<if test="execEmpName != null">
+				AND exec_emp_name = #{execEmpName, jdbcType=VARCHAR}
+			</if>
+			<if test="comState != null">
+				AND com_state = #{comState, jdbcType=VARCHAR}
+			</if>
+			<if test="comEndTime != null">
+				AND com_end_time = #{comEndTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="lastEndTime != null">
+				AND last_end_time = #{lastEndTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null ">
+				AND delete_state =
+				#{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="selectTasks" parameterType="string"
+		resultType="com.pro.xwt.common.model.BTask">
+		select
+		<include refid="Base_Column_List" />
+		FROM b_task
+		where last_end_time &lt;NOW() and com_state="0" and msg_State="0" and
+		exec_emp_id=#{execEmpId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectTaskByEmployee" parameterType="string"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		FROM b_task
+		where exec_emp_id = #{execEmpId ,jdbcType=VARCHAR} and com_state="0" and
+		cycle_time="NONE"
+	</select>
+
+	<select id="taskedCount" resultType="int">
+		select COUNT(1)
+		from b_task
+		WHERE com_state = "1"
+	</select>
+
+	<select id="taskingCount" resultType="int">
+		select COUNT(1)
+		from b_task
+		last_end_time &lt;= NOW() and com_state ="0"
+	</select>
+
+	<select id="overdueTaskCount" resultType="int">
+		select COUNT(1)
+		from
+		b_task
+		from b_task last_end_time &gt;= NOW() and com_state ="0"
+	</select>
+
+	<select id="activeEmployee" resultType="int">
+		select COUNT(DISTINCT exec_emp_name)
+		FROM b_task
+		WHERE last_end_time&lt;NOW() AND com_state="0" AND delete_state="0"
+	</select>
+
+
+
+
+
+
+
+</mapper>

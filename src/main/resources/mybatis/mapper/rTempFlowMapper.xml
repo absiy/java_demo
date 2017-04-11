@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.xwt.common.mapper.RTempFlowMapper">
+	<resultMap id="BaseResultMap" type="com.pro.xwt.common.model.RTempFlow">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="temp_id" property="tempId" jdbcType="VARCHAR" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="delete_state" property="deleteState" jdbcType="VARCHAR" />
+		<result column="create_emp_id" property="createEmpId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, temp_id, sort, create_time, delete_state,
+		create_emp_id
+	</sql>
+	<sql id="Foreign_List">
+		r.id, r.name, r.temp_id, r.sort, r.create_time, r.delete_state,
+		r.create_emp_id
+	</sql>
+
+	<insert id="insert" parameterType="com.pro.xwt.common.model.RTempFlow">
+		insert into r_temp_flow
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="tempId != null">
+				temp_id,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="deleteState != null">
+				delete_state,
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="tempId != null">
+				#{tempId,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=INTEGER},
+			</if>
+
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteState != null">
+				#{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpId != null">
+				#{createEmpId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="deleteById" parameterType="string">
+		delete r_temp_flow
+		set
+		delete_state = 1
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<update id="update" parameterType="com.pro.xwt.common.model.RTempFlow">
+		update r_temp_flow
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="tempId != null">
+				temp_id = #{tempId,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				sort = #{projId,jdbcType=INTEGER},
+			</if>
+			<if test="description != null">
+				create_time = #{description,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteState != null">
+				delete_state = #{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id = #{createEmpId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="findByCondition" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from r_temp_flow
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="tempId != null">
+				AND temp_id = #{tempId,jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				AND sort = #{sort,jdbcType=INTEGER}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+		LIMIT 0,1
+	</select>
+
+	<select id="findById" parameterType="string" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from r_temp_flow
+		where id=#{id}
+	</select>
+
+	<select id="queryListAll" parameterType="map"
+		resultType="com.pro.xwt.common.model.RTempFlow">
+		select
+		<include refid="Base_Column_List" />
+		from r_temp_flow
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="tempId != null">
+				AND temp_id = #{tempId,jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				AND sort = #{sort,jdbcType=INTEGER}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+
+	<select id="count" parameterType="map" resultType="string">
+		select COUNT(1)
+		from r_temp_flow
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="tempId != null">
+				AND temp_id = #{tempId,jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				AND sort = #{sort,jdbcType=INTEGER}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="queryListByPojo" parameterType="com.pro.xwt.common.model.RTempFlow"
+		resultType="com.pro.xwt.common.model.RTempFlow">
+		select
+		<include refid="Base_Column_List" />
+		from r_temp_flow
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="tempId != null">
+				AND temp_id = #{tempId,jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				AND sort = #{sort,jdbcType=INTEGER}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="selectRTempFlowByBTemplate" parameterType="string"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Foreign_List" />
+		from r_temp_flow r
+		left join b_template b
+		on b.id = r.temp_id
+		where b.id = #{id,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

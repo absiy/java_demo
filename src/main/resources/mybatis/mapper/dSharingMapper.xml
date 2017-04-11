@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.xwt.common.mapper.DSharingMapper">
+	<resultMap id="BaseResultMap" type="com.pro.xwt.common.model.DSharing">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="share_file_id" property="shareFileId" jdbcType="VARCHAR" />
+		<result column="share_begin_time" property="shareBeginTime"
+			jdbcType="TIMESTAMP" />
+		<result column="share_end_time" property="shareEndTime"
+			jdbcType="TIMESTAMP" />
+		<result column="delete_state" property="deleteState" jdbcType="VARCHAR" />
+		<result column="share_emp_id" property="shareEmpId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, share_file_id, share_begin_time, share_end_time, delete_state,
+		share_emp_id
+	</sql>
+	<insert id="insert" parameterType="com.pro.xwt.common.model.DSharing">
+		insert into d_sharing
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="shareFileId != null">
+				share_file_id,
+			</if>
+			<if test="shareBeginTime != null">
+				share_begin_time,
+			</if>
+			<if test="shareEndTime != null">
+				share_end_time,
+			</if>
+			<if test="deleteState != null">
+				delete_state,
+			</if>
+			<if test="shareEmpId != null">
+				share_emp_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="shareFileId != null">
+				#{shareFileId,jdbcType=VARCHAR},
+			</if>
+			<if test="shareBeginTime != null">
+				#{shareBeginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shareEndTime != null">
+				#{shareEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteState != null">
+				#{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="shareEmpId != null">
+				#{shareEmpId,jdbcType=VARCHAR},
+			</if>
+
+		</trim>
+	</insert>
+	<select id="findById" parameterType="string" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from d_sharing
+		where id=#{id}
+	</select>
+</mapper>

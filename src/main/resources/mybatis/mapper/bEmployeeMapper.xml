@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.xwt.common.mapper.BEmployeeMapper">
+	<resultMap id="BaseResultMap" type="com.pro.xwt.common.model.BEmployee">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="department_id" property="departmentId" jdbcType="INTEGER" />
+		<result column="role" property="role" jdbcType="VARCHAR" />
+		<result column="duty" property="duty" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="delete_state" property="deleteState" jdbcType="VARCHAR" />
+		<result column="create_emp_id" property="createEmpId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, username ,department_id,role, duty, email, phone, create_time,
+		delete_state,
+		create_emp_id
+	</sql>
+	<sql id="Foreign_List">
+		e.id, e.name, e.username , e.role, e.duty, e.email, e.phone
+	</sql>
+	<insert id="insert" parameterType="com.pro.xwt.common.model.BEmployee">
+		insert into b_employee
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="username != null">
+				username,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="departmentId != null">
+				department_id,
+			</if>
+			<if test="role != null">
+				role,
+			</if>
+			<if test="duty != null">
+				duty,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="deleteState != null">
+				delete_state,
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="departmentId != null">
+				#{departmentId,jdbcType=INTEGER},
+			</if>
+			<if test="role != null">
+				#{role,jdbcType=VARCHAR},
+			</if>
+			<if test="duty != null">
+				#{duty,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteState != null">
+				#{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpId != null">
+				#{createEmpId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="deleteById" parameterType="string">
+		delete b_employee
+		set
+		delete_state = 1
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<update id="update" parameterType="com.pro.xwt.common.model.BEmployee">
+		update b_employee
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="role != null">
+				role = #{role,jdbcType=VARCHAR},
+			</if>
+			<if test="duty != null">
+				duty = #{duty,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteState != null">
+				delete_state = #{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id = #{createEmpId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="findByCondition" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from b_employee
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="username != null">
+				AND username = #{username, jdbcType=VARCHAR}
+			</if>
+			<if test="password != null">
+				AND password = #{password, jdbcType=VARCHAR}
+			</if>
+			<if test="role != null">
+				AND role = #{role, jdbcType=VARCHAR}
+			</if>
+			<if test="duty != null">
+				AND duty = #{duty, jdbcType=VARCHAR}
+			</if>
+			<if test="email != null">
+				AND email = #{email, jdbcType=VARCHAR}
+			</if>
+			<if test="phone != null">
+				AND phone = #{phone, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+		LIMIT 0,1
+	</select>
+
+	<select id="findById" parameterType="string" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from b_employee
+		where id=#{id}
+	</select>
+
+	<select id="queryListAll" parameterType="map"
+		resultType="com.pro.xwt.common.model.BEmployee">
+		select
+		<include refid="Base_Column_List" />
+		from b_employee
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="username != null">
+				AND username = #{username, jdbcType=VARCHAR}
+			</if>
+			<if test="password != null">
+				AND password = #{password, jdbcType=VARCHAR}
+			</if>
+			<if test="departmentId != null">
+				AND department_id = #{departmentId, jdbcType=INTEGER}
+			</if>
+			
+			<if test="role != null">
+				AND role = #{role, jdbcType=VARCHAR}
+			</if>
+			<if test="duty != null">
+				AND duty = #{duty, jdbcType=VARCHAR}
+			</if>
+			<if test="email != null">
+				AND email = #{email, jdbcType=VARCHAR}
+			</if>
+			<if test="phone != null">
+				AND phone = #{phone, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+
+	<select id="count" parameterType="map" resultType="string">
+		select COUNT(1)
+		from b_employee
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="username != null">
+				AND username = #{username, jdbcType=VARCHAR}
+			</if>
+			<if test="password != null">
+				AND password = #{password, jdbcType=VARCHAR}
+			</if>
+			<if test="role != null">
+				AND role = #{role, jdbcType=VARCHAR}
+			</if>
+			<if test="duty != null">
+				AND duty = #{duty, jdbcType=VARCHAR}
+			</if>
+			<if test="email != null">
+				AND email = #{email, jdbcType=VARCHAR}
+			</if>
+			<if test="phone != null">
+				AND phone = #{phone, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="queryListByPojo" parameterType="com.pro.xwt.common.model.BEmployee"
+		resultType="com.pro.xwt.common.model.BEmployee">
+		select
+		<include refid="Base_Column_List" />
+		from b_employee
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="username != null">
+				AND username = #{username, jdbcType=VARCHAR}
+			</if>
+			<if test="password != null">
+				AND password = #{password, jdbcType=VARCHAR}
+			</if>
+			<if test="role != null">
+				AND role = #{role, jdbcType=VARCHAR}
+			</if>
+			<if test="duty != null">
+				AND duty = #{duty, jdbcType=VARCHAR}
+			</if>
+			<if test="email != null">
+				AND email = #{email, jdbcType=VARCHAR}
+			</if>
+			<if test="phone != null">
+				AND phone = #{phone, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState,jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+
+	<select id="selectEmployeeByProject" parameterType="string"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Foreign_List" />
+		FROM b_employee e
+		LEFT JOIN r_proj_emp r
+		ON r.emp_id = e.id
+		LEFT JOIN
+		b_project p
+		ON r.proj_id = p.id
+		where p.id =
+		#{projectId,jdbcType=VARCHAR} AND r.delete_state='0'
+	</select>
+
+	<select id="selectEmployeeByTask" parameterType="string"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Foreign_List" />
+		FROM b_employee e
+		LEFT JOIN b_task t
+		ON e.id = t.exec_emp_id
+		where t.id =
+		#{taskId,jdbcType=VARCHAR}
+	</select>
+	<update id="updateById" parameterType="map">
+		update b_employee
+		<set>
+			<if test="newPwd != null">
+			password = #{newPwd, jdbcType=VARCHAR}
+			</if>
+			where id = #{id,jdbcType=VARCHAR}
+		</set>
+	</update>
+</mapper>

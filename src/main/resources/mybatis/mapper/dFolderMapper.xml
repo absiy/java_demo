@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.xwt.common.mapper.DFolderMapper">
+	<resultMap id="BaseResultMap" type="com.pro.xwt.common.model.DFolder">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="size" property="size" jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="delete_state" property="deleteState" jdbcType="VARCHAR" />
+		<result column="create_emp_id" property="createEmpId" jdbcType="VARCHAR" />
+		<result column="create_emp_name" property="createEmpName"
+			jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="parent_folder_id" property="parentFolderId"
+			jdbcType="VARCHAR" />
+		<result column="proj_id" property="projId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, size, create_time, delete_state, create_emp_id,
+		update_time,create_emp_name,
+		parent_folder_id,
+		proj_id
+	</sql>
+	<select id="findByProjId" parameterType="string" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from d_folder
+		where proj_id=#{id} and delete_state='0' and
+		(parent_folder_id IS NULL OR parent_folder_id='')
+	</select>
+	<select id="findSubFoldByParentId" parameterType="string"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from d_folder
+		where parent_folder_id=#{id} and delete_state='0'
+	</select>
+	<insert id="insert" parameterType="com.pro.xwt.common.model.DFolder">
+		insert into d_folder
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="size != null">
+				size,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="deleteState != null">
+				delete_state,
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id,
+			</if>
+			<if test="createEmpName != null">
+				create_emp_name,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+
+			<if test="parentFolderId != null">
+				parent_folder_id,
+			</if>
+			<if test="projId != null">
+				proj_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="size != null">
+				#{size,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+
+			<if test="deleteState != null">
+				#{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpId != null">
+				#{createEmpId,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpName != null">
+				#{createEmpName,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="parentFolderId != null">
+				#{parentFolderId,jdbcType=VARCHAR},
+			</if>
+			<if test="projId != null">
+				#{projId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="findById" parameterType="string" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from d_folder
+		where id=#{id}
+	</select>
+
+	<update id="update" parameterType="com.pro.xwt.common.model.DFolder">
+		update d_folder
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="size != null">
+				size = #{size,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteState != null">
+				delete_state = #{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id = #{createEmpId,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createEmpName != null">
+				create_emp_name = #{createEmpName,jdbcType=VARCHAR},
+			</if>
+			<if test="parentFolderId != null">
+				parent_folder_id = #{parentFolderId,jdbcType=VARCHAR},
+			</if>
+			<if test="projId != null">
+				proj_id = #{projId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateSize">
+		update d_folder set size = size + #{size} where id = #{id}
+	</update>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.xwt.common.mapper.BDictionaryMapper" >
+  <resultMap id="BaseResultMap" type="com.pro.xwt.common.model.BDictionary" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="dict_type" property="dictType" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="delete_state" property="deleteState" jdbcType="VARCHAR" />
+    <result column="create_emp_id" property="createEmpId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, code, dict_type, create_time, delete_state, create_emp_id
+  </sql>
+  <select id="queryListAll" parameterType="map" resultType="com.pro.xwt.common.model.BDictionary">		
+		select
+	    <include refid="Base_Column_List" />
+		from b_dictionary
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="code != null">
+				AND code = #{code, jdbcType=VARCHAR}
+			</if>
+			<if test="dictType != null">
+				AND dict_type = #{dictType, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=VARCHAR}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState, jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="findByDictType" parameterType="string" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from b_dictionary
+		where dict_type = #{dictType}
+	</select>
+</mapper>

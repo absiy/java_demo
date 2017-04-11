@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.xwt.common.mapper.BProjectMapper">
+	<resultMap id="BaseResultMap" type="com.pro.xwt.common.model.BProject">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="summary" property="summary" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="temp_type_id" property="tempTypeId" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="delete_state" property="deleteState" jdbcType="VARCHAR" />
+		<result column="create_emp_id" property="createEmpId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, summary, start_time, end_time, temp_type_id,
+		create_Time,
+		delete_state,
+		create_emp_id
+	</sql>
+	<sql id="Foreign_List">
+		p.id, p.name, p.summary, p.start_time, p.end_time,
+		p.create_emp_id
+	</sql>
+	<insert id="insert" parameterType="com.pro.xwt.common.example.BProjectExample"
+		keyProperty="id">
+
+		insert into b_project
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id!=null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="summary != null">
+				summary,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="tempTypeId != null">
+				temp_type_id,
+			</if>
+			<if test="createTime != null">
+				create_Time,
+			</if>
+			<if test="deleteState != null">
+				delete_state,
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="summary != null">
+				#{summary,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="tempTypeId != null">
+				#{tempTypeId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteState != null">
+				#{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpId != null">
+				#{createEmpId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="deleteById" parameterType="string">
+
+		update b_project
+		set
+		delete_state = 1
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<update id="update" parameterType="com.pro.xwt.common.model.BProject">
+		update b_employee
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="summary != null">
+				summary = #{summary,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="tempTypeId != null">
+				temp_type_id = #{tempTypeId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteState != null">
+				delete_state = #{deleteState,jdbcType=VARCHAR},
+			</if>
+			<if test="createEmpId != null">
+				create_emp_id = #{createEmpId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="findByCondition" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+
+		from b_project
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="summary != null">
+				AND summary = #{summary, jdbcType=VARCHAR}
+			</if>
+			<if test="startTime != null">
+				AND start_time = #{startTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="endTime != null">
+				AND end_time = #{endTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="tempTypeId != null">
+				AND temp_type_id = #{tempTypeId, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState, jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+		LIMIT 0,1
+	</select>
+
+	<select id="findById" parameterType="string" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from b_project
+		where id=#{id}
+	</select>
+
+	<select id="queryListAll" parameterType="map"
+		resultType="com.pro.xwt.common.model.BProject">
+		select
+		<include refid="Base_Column_List" />
+
+		from b_project
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="summary != null">
+				AND summary = #{summary, jdbcType=VARCHAR}
+			</if>
+			<if test="startTime != null">
+				AND start_time = #{startTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="endTime != null">
+				AND end_time = #{endTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="tempTypeId != null">
+				AND temp_type_id = #{tempTypeId, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState, jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+
+	<select id="count" parameterType="map" resultType="string">
+		select COUNT(1)
+
+		from b_project
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="summary != null">
+				AND summary = #{summary, jdbcType=VARCHAR}
+			</if>
+			<if test="startTime != null">
+				AND start_time = #{startTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="endTime != null">
+				AND end_time = #{endTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="tempTypeId != null">
+				AND temp_type_id = #{tempTypeId, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState, jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+
+
+	<select id="queryListByPojo" parameterType="com.pro.xwt.common.example.BProjectExample"
+		resultType="com.pro.xwt.common.model.BProject">
+		select
+		<include refid="Base_Column_List" />
+
+		from b_project
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="summary != null">
+				AND summary = #{summary, jdbcType=VARCHAR}
+			</if>
+			<if test="startTime != null">
+				AND start_time = #{startTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="endTime != null">
+				AND end_time = #{endTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="tempTypeId != null">
+				AND temp_type_id = #{tempTypeId, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deleteState != null">
+				AND delete_state = #{deleteState, jdbcType=VARCHAR}
+			</if>
+			<if test="createEmpId != null">
+				AND create_emp_id = #{createEmpId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="selectProjectByEmployee" parameterType="string"
+		resultType="com.pro.xwt.common.model.BProject">
+		select
+		<include refid="Foreign_List" />
+		from b_project p
+		LEFT JOIN r_proj_emp r
+		ON r.proj_id = p.id
+		LEFT JOIN
+		b_employee b
+		ON r.emp_id = b.id
+		where b.id = #{empId,jdbcType=VARCHAR}
+		and p.delete_State='0'
+	</select>
+
+	<select id="projectingCount" resultType="string" parameterType="map">
+		select COUNT(1)
+		from b_project
+		end_time &lt;NOW()
+		<if test="deleteState != null">
+			AND delete_state = #{deleteState, jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<select id="projectedcCount" resultType="string" parameterType="map">
+		select COUNT(1)
+		from b_project
+		end_time &gt;NOW()
+		<if test="deleteState != null">
+			AND delete_state = #{deleteState, jdbcType=VARCHAR}
+		</if>
+	</select>
+
+</mapper>
